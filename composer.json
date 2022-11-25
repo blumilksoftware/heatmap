@@ -1,0 +1,34 @@
+{
+  "name": "blumilksoftware/heatmap-builder",
+  "description": "Heatmap builder library",
+  "license": "MIT",
+  "type": "library",
+  "require": {
+    "php": "^8.1",
+    "nesbot/carbon": "^2.63"
+  },
+  "require-dev": {
+    "blumilksoftware/codestyle": "^1.9",
+    "phpunit/phpunit": "^9.5"
+  },
+  "authors": [
+    {
+      "name": "Krzysztof Rewak",
+      "email": "krzysztof.rewak@blumilk.pl"
+    }
+  ],
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "Blumilk\\HeatmapBuilder\\": "src/"
+    }
+  },
+  "scripts": {
+    "cs": "./vendor/bin/php-cs-fixer fix --dry-run --diff --config codestyle.php",
+    "csf": "./vendor/bin/php-cs-fixer fix --diff --config codestyle.php",
+    "test": "./vendor/bin/phpunit tests --colors always"
+  }
+}
