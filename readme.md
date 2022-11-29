@@ -1,7 +1,9 @@
 ## About
 Making a heatmap from custom datasets should be extremely easy. We are here to help you with that.
 
-What's a heatmap? It is a data visualization technique that shows magnitude of a phenomenon as color in two dimensions<sup>[[1](https://en.wikipedia.org/wiki/Heat_map)]</sup>, and you can know it from GitHub user profile pages.
+What's a heatmap? It is a data visualization technique that shows magnitude of a phenomenon as color in two dimensions<sup>[[1](https://en.wikipedia.org/wiki/Heat_map)]</sup>, and you can know it from GitHub user profile pages:
+
+![./docs/github.png](./docs/github.png)
 
 ### Installation
 The Heatmap is distributed as Composer library via Packagist. To add it to your project, just run:
