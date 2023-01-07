@@ -22,6 +22,8 @@ class HeatmapBuilder
         protected ?CarbonPeriod $period = null,
         protected string $arrayAccessIndex = self::DEFAULT_ARRAY_ACCESS_INDEX,
         protected ?Decorator $decorator = null,
+        protected bool $alignedToStartOfPeriod = false,
+        protected bool $alignedToEndOfPeriod = false,
     ) {}
 
     /**
@@ -40,11 +42,14 @@ class HeatmapBuilder
                     PeriodInterval::Weekly => $date->format("Y:W"),
                     PeriodInterval::Daily => $date->format("Y-m-d"),
                 },
-                count: count(array_filter($data, fn(Carbon $item): bool => match ($this->periodInterval) {
-                    PeriodInterval::Monthly => $item->isSameMonth($date),
-                    PeriodInterval::Weekly => $item->isSameWeek($date),
-                    PeriodInterval::Daily => $item->isSameDay($date),
-                })),
+                count: count(
+                    array_filter($data, fn(Carbon $item): bool => match ($this->periodInterval) {
+                        PeriodInterval::Monthly => $item->isSameMonth($date),
+                        PeriodInterval::Weekly => $item->isSameWeek($date),
+                        PeriodInterval::Daily => $item->isSameDay($date),
+                    }),
+                ),
+                inFuture: $date->isFuture(),
             );
         }
 
@@ -70,6 +75,24 @@ class HeatmapBuilder
     public function changePeriod(CarbonPeriod $period): static
     {
         $this->period = $period;
+        return $this;
+    }
+
+    public function changePeriodInterval(PeriodInterval $interval): static
+    {
+        $this->periodInterval = $interval;
+        return $this;
+    }
+
+    public function alignedToStartOfPeriod(): static
+    {
+        $this->alignedToStartOfPeriod = true;
+        return $this;
+    }
+
+    public function alignedToEndOfPeriod(): static
+    {
+        $this->alignedToEndOfPeriod = true;
         return $this;
     }
 
@@ -99,10 +122,40 @@ class HeatmapBuilder
 
     protected function getPeriod(): CarbonPeriod
     {
-        return $this->period ?? match ($this->periodInterval) {
-            PeriodInterval::Monthly => new CarbonPeriod($this->now->copy()->subYear(), $this->periodInterval->value, $this->now->copy()),
-            PeriodInterval::Weekly => new CarbonPeriod($this->now->copy()->subMonth(), $this->periodInterval->value, $this->now->copy()),
-            PeriodInterval::Daily => new CarbonPeriod($this->now->copy()->subWeek(), $this->periodInterval->value, $this->now->copy()),
-        };
+        $period = $this->period === null
+            ? new CarbonPeriod(
+                match ($this->periodInterval) {
+                    PeriodInterval::Monthly => $this->now->copy()->subYear(),
+                    PeriodInterval::Weekly => $this->now->copy()->subMonth(),
+                    PeriodInterval::Daily => $this->now->copy()->subWeek(),
+                },
+                $this->periodInterval->value,
+                $this->now->copy(),
+            )
+            : $this->period;
+
+        if ($this->alignedToStartOfPeriod) {
+            $from = $period->getStartDate()->copy();
+            $from = match ($this->periodInterval) {
+                PeriodInterval::Monthly => $from->startOfYear(),
+                PeriodInterval::Weekly => $from->startOfMonth(),
+                PeriodInterval::Daily => $from->startOfWeek(),
+            };
+
+            $period->setStartDate($from);
+        }
+
+        if ($this->alignedToEndOfPeriod) {
+            $to = $period->getEndDate()->copy();
+            $to = match ($this->periodInterval) {
+                PeriodInterval::Monthly => $to->endOfYear(),
+                PeriodInterval::Weekly => $to->endOfMonth(),
+                PeriodInterval::Daily => $to->endOfWeek(),
+            };
+
+            $period->setEndDate($to);
+        }
+
+        return $period;
     }
 }
