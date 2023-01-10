@@ -32,6 +32,10 @@ class TailwindDecorator implements Decorator
                 $tile->count >= $max * .2 => "bg-{$this->theme}-100",
                 default => "bg-{$this->theme}-50",
             };
+
+            if ($tile->inFuture) {
+                $tile->description = " opacity-25";
+            }
         }
 
         return $bucket;

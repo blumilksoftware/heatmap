@@ -12,6 +12,7 @@ class Tile implements JsonSerializable
         public readonly string $label,
         public readonly int $count,
         public string $description = "",
+        public bool $inFuture = false,
     ) {}
 
     public function jsonSerialize(): array

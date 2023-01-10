@@ -8,7 +8,7 @@
     "nesbot/carbon": "^2.63"
   },
   "require-dev": {
-    "blumilksoftware/codestyle": "^1.9",
+    "blumilksoftware/codestyle": "^1.10",
     "phpunit/phpunit": "^9.5"
   },
   "authors": [
