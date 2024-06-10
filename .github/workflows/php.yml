@@ -1,0 +1,52 @@
+name: Test & lint PHP stuff
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+    paths:
+      - '**.php'
+      - 'composer.json'
+      - 'composer.lock'
+      - 'phpunit.xml'
+
+jobs:
+  test-and-lint-php:
+    name: Test & lint PHP stuff
+    timeout-minutes: 10
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Cache dependencies
+        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-dependencies-${{ hashFiles('composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-dependencies
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@c665c7a15b5295c2488ac8a87af9cb806cd72198 # 2.30.4
+        with:
+          php-version: 8.2
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, intl, gd
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-interaction --no-suggest
+
+      - name: Run PHP linter
+        run: composer cs
+
+      - name: Execute tests
+        run: php vendor/bin/phpunit --configuration phpunit.xml
