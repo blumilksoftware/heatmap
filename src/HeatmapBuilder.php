@@ -35,6 +35,7 @@ class HeatmapBuilder
         $period = $this->getPeriod();
 
         $bucket = [];
+
         foreach ($period as $date) {
             $bucket[] = new Tile(
                 label: match ($this->periodInterval) {
@@ -63,36 +64,42 @@ class HeatmapBuilder
     public function changeArrayAccessIndex(string $arrayAccessIndex): static
     {
         $this->arrayAccessIndex = $arrayAccessIndex;
+
         return $this;
     }
 
     public function changeNow(Carbon $now): static
     {
         $this->now = $now;
+
         return $this;
     }
 
     public function changePeriod(CarbonPeriod $period): static
     {
         $this->period = $period;
+
         return $this;
     }
 
     public function changePeriodInterval(PeriodInterval $interval): static
     {
         $this->periodInterval = $interval;
+
         return $this;
     }
 
     public function alignedToStartOfPeriod(): static
     {
         $this->alignedToStartOfPeriod = true;
+
         return $this;
     }
 
     public function alignedToEndOfPeriod(): static
     {
         $this->alignedToEndOfPeriod = true;
+        
         return $this;
     }
 
