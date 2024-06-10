@@ -99,7 +99,7 @@ class HeatmapBuilder
     public function alignedToEndOfPeriod(): static
     {
         $this->alignedToEndOfPeriod = true;
-        
+
         return $this;
     }
 
