@@ -42,8 +42,13 @@ class DecoratorTest extends TestCase
             actual: array_map(fn(Tile $item): int => $item->count, $result),
         );
 
+        $defaultClasses = "size-4 border border-gray-300 rounded";
+
         $this->assertSame(
-            expected: ["bg-white", "bg-white", "bg-green-100", "bg-green-600", "bg-white", "bg-green-900", "bg-white", "bg-green-50"],
+            expected: array_map(
+                fn(string $class): string => "$defaultClasses $class",
+                ["bg-white", "bg-white", "bg-green-100", "bg-green-600", "bg-white", "bg-green-900", "bg-white", "bg-green-50"],
+            ),
             actual: array_map(fn(Tile $item): string => $item->description, $result),
         );
     }

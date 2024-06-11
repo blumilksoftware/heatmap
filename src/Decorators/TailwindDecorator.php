@@ -11,6 +11,11 @@ class TailwindDecorator implements Decorator
 {
     public function __construct(
         public readonly string $theme,
+        public readonly string $futureTileClass = "opacity-25",
+        public readonly string $todayTileClass = "border-gray-400 shadow",
+        public readonly string $defaultSizeClass = "size-4",
+        public readonly string $defaultBorderClass = "border border-gray-300",
+        public readonly string $defaultRoundedClass = "rounded",
     ) {}
 
     public function decorate(array $bucket): array
@@ -19,7 +24,9 @@ class TailwindDecorator implements Decorator
 
         /** @var Tile $tile */
         foreach ($bucket as $tile) {
-            $tile->description = match (true) {
+            $description = $this->getDefaultAttributes();
+
+            $description[] = match (true) {
                 $tile->count === 0 => "bg-white",
                 $tile->count === $max => "bg-{$this->theme}-900",
                 $tile->count >= $max * .9 => "bg-{$this->theme}-800",
@@ -34,10 +41,21 @@ class TailwindDecorator implements Decorator
             };
 
             if ($tile->inFuture) {
-                $tile->description = " opacity-25";
+                $description[] = $this->futureTileClass;
             }
+
+            if ($tile->isToday) {
+                $description[] = $this->todayTileClass;
+            }
+
+            $tile->description = implode(" ", $description);
         }
 
         return $bucket;
+    }
+
+    protected function getDefaultAttributes(): array
+    {
+        return [$this->defaultSizeClass, $this->defaultBorderClass, $this->defaultRoundedClass];
     }
 }

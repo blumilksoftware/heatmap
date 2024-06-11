@@ -50,6 +50,11 @@ class HeatmapBuilder
                         PeriodInterval::Daily => $item->isSameDay($date),
                     }),
                 ),
+                isToday: match ($this->periodInterval) {
+                    PeriodInterval::Monthly => $date->isCurrentMonth(),
+                    PeriodInterval::Weekly => $date->isCurrentWeek(),
+                    PeriodInterval::Daily => $date->isCurrentDay(),
+                },
                 inFuture: $date->isFuture(),
             );
         }
