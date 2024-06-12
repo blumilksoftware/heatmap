@@ -10,7 +10,6 @@ use Blumilk\HeatmapBuilder\Contracts\TimeGroupable;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Carbon\CarbonTimeZone;
-use DateTimeZone;
 
 class HeatmapBuilder
 {
