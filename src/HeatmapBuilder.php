@@ -9,6 +9,7 @@ use Blumilk\HeatmapBuilder\Contracts\Decorator;
 use Blumilk\HeatmapBuilder\Contracts\TimeGroupable;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Carbon\CarbonTimeZone;
 use DateTimeZone;
 
 class HeatmapBuilder
@@ -25,7 +26,7 @@ class HeatmapBuilder
         protected ?Decorator $decorator = null,
         protected bool $alignedToStartOfPeriod = false,
         protected bool $alignedToEndOfPeriod = false,
-        protected int $timeOffset = 0,
+        protected ?CarbonTimeZone $timezone = null,
     ) {}
 
     /**
@@ -130,7 +131,7 @@ class HeatmapBuilder
             ? Carbon::parse($item->getTimeGroupableIndicator())
             : Carbon::parse($item[$this->arrayAccessIndex]);
 
-        $date->addHours($this->timeOffset);
+        $date->setTimezone($this->timezone);
 
         return match ($this->periodInterval) {
             PeriodInterval::Monthly => $date->startOfMonth(),
