@@ -4,3 +4,4 @@
 vendor
 composer.lock
 index.php
+.php-cs-fixer.cache

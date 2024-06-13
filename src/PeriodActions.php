@@ -43,6 +43,7 @@ trait PeriodActions
         $start = $this->now->copy()->sub(
             $number,
             match ($this->periodInterval) {
+                PeriodInterval::Hourly => "hours",
                 PeriodInterval::Daily => "days",
                 PeriodInterval::Weekly => "weeks",
                 PeriodInterval::Monthly => "months",

@@ -9,6 +9,7 @@ use Blumilk\HeatmapBuilder\Contracts\Decorator;
 use Blumilk\HeatmapBuilder\Contracts\TimeGroupable;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Carbon\CarbonTimeZone;
 
 class HeatmapBuilder
 {
@@ -24,7 +25,10 @@ class HeatmapBuilder
         protected ?Decorator $decorator = null,
         protected bool $alignedToStartOfPeriod = false,
         protected bool $alignedToEndOfPeriod = false,
-    ) {}
+        protected ?CarbonTimeZone $timezone = null,
+    ) {
+        $this->timezone ??= new CarbonTimeZone("UTC");
+    }
 
     /**
      * @param iterable<array|ArrayAccess|TimeGroupable> $data
@@ -42,18 +46,21 @@ class HeatmapBuilder
                     PeriodInterval::Monthly => $date->format("Y-m"),
                     PeriodInterval::Weekly => $date->format("Y:W"),
                     PeriodInterval::Daily => $date->format("Y-m-d"),
+                    PeriodInterval::Hourly => $date->format("H:i"),
                 },
                 count: count(
                     array_filter($data, fn(Carbon $item): bool => match ($this->periodInterval) {
                         PeriodInterval::Monthly => $item->isSameMonth($date),
                         PeriodInterval::Weekly => $item->isSameWeek($date),
                         PeriodInterval::Daily => $item->isSameDay($date),
+                        PeriodInterval::Hourly => $item->isSameHour($date),
                     }),
                 ),
                 isToday: match ($this->periodInterval) {
                     PeriodInterval::Monthly => $date->isCurrentMonth(),
                     PeriodInterval::Weekly => $date->isCurrentWeek(),
                     PeriodInterval::Daily => $date->isCurrentDay(),
+                    PeriodInterval::Hourly => $date->isCurrentHour(),
                 },
                 inFuture: $date->isFuture(),
             );
@@ -125,10 +132,13 @@ class HeatmapBuilder
             ? Carbon::parse($item->getTimeGroupableIndicator())
             : Carbon::parse($item[$this->arrayAccessIndex]);
 
+        $date->setTimezone($this->timezone);
+
         return match ($this->periodInterval) {
             PeriodInterval::Monthly => $date->startOfMonth(),
             PeriodInterval::Weekly => $date->startOfWeek(),
             PeriodInterval::Daily => $date->startOfDay(),
+            PeriodInterval::Hourly => $date->startOfHour(),
         };
     }
 
@@ -140,6 +150,7 @@ class HeatmapBuilder
                     PeriodInterval::Monthly => $this->now->copy()->subYear(),
                     PeriodInterval::Weekly => $this->now->copy()->subMonth(),
                     PeriodInterval::Daily => $this->now->copy()->subWeek(),
+                    PeriodInterval::Hourly => $this->now->copy()->subDay(),
                 },
                 $this->periodInterval->value,
                 $this->now->copy(),
@@ -152,6 +163,7 @@ class HeatmapBuilder
                 PeriodInterval::Monthly => $from->startOfYear(),
                 PeriodInterval::Weekly => $from->startOfMonth(),
                 PeriodInterval::Daily => $from->startOfWeek(),
+                PeriodInterval::Hourly => $from->startOfDay(),
             };
 
             $period->setStartDate($from);
@@ -163,6 +175,7 @@ class HeatmapBuilder
                 PeriodInterval::Monthly => $to->endOfYear(),
                 PeriodInterval::Weekly => $to->endOfMonth(),
                 PeriodInterval::Daily => $to->endOfWeek(),
+                PeriodInterval::Hourly => $to->endOfDay(),
             };
 
             $period->setEndDate($to);
