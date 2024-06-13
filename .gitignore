@@ -5,3 +5,4 @@ vendor
 composer.lock
 data.json
 heatmapOutput.json
+.php-cs-fixer.cache
