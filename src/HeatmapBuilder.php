@@ -26,7 +26,9 @@ class HeatmapBuilder
         protected bool $alignedToStartOfPeriod = false,
         protected bool $alignedToEndOfPeriod = false,
         protected ?CarbonTimeZone $timezone = null,
-    ) {}
+    ) {
+        $this->timezone ??= new CarbonTimeZone("UTC");
+    }
 
     /**
      * @param iterable<array|ArrayAccess|TimeGroupable> $data

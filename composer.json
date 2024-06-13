@@ -9,7 +9,7 @@
   },
   "require-dev": {
     "blumilksoftware/codestyle": "^3.1",
-    "phpunit/phpunit": "^11.1.3"
+    "phpunit/phpunit": "^11.2"
   },
   "authors": [
     {
