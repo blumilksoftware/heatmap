@@ -3,5 +3,6 @@
 .phpunit.result.cache
 vendor
 composer.lock
-index.php
+data.json
+heatmapOutput.json
 .php-cs-fixer.cache
