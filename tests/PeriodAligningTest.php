@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 use Blumilk\HeatmapBuilder\HeatmapBuilder;
 use Carbon\Carbon;
+use Carbon\CarbonTimeZone;
 use PHPUnit\Framework\TestCase;
 
 class PeriodAligningTest extends TestCase
 {
     public function testAligningPeriodForDailyHeatmap(): void
     {
-        $builder = new HeatmapBuilder(now: Carbon::parse("2022-11-19 00:00:00"));
+        $builder = new HeatmapBuilder(
+            now: Carbon::parse("2022-11-19 00:00:00"),
+            timezone: new CarbonTimeZone("1"),
+        );
         $builder->forLastMonth()->alignedToStartOfPeriod();
 
         $result = $builder->build($this->getData());
@@ -23,7 +27,10 @@ class PeriodAligningTest extends TestCase
 
     public function testAligningPeriodForDailyHeatmapFromBothSides(): void
     {
-        $builder = new HeatmapBuilder(now: Carbon::parse("2022-11-19 00:00:00"));
+        $builder = new HeatmapBuilder(
+            now: Carbon::parse("2022-11-19 00:00:00"),
+            timezone: new CarbonTimeZone("1"),
+        );
         $builder->forLastMonth()->alignedToStartOfPeriod()->alignedToEndOfPeriod();
 
         $result = $builder->build($this->getData());
@@ -36,7 +43,10 @@ class PeriodAligningTest extends TestCase
 
     public function testAligningPeriodForNumberOfTiles(): void
     {
-        $builder = new HeatmapBuilder(now: Carbon::parse("2022-11-19 00:00:00"));
+        $builder = new HeatmapBuilder(
+            now: Carbon::parse("2022-11-19 00:00:00"),
+            timezone: new CarbonTimeZone("1"),
+        );
         $builder->forNumberOfTiles(4)->alignedToStartOfPeriod();
 
         $result = $builder->build($this->getData());

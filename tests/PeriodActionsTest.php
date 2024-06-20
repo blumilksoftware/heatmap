@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 use Blumilk\HeatmapBuilder\HeatmapBuilder;
 use Carbon\Carbon;
+use Carbon\CarbonTimeZone;
 use PHPUnit\Framework\TestCase;
 
 class PeriodActionsTest extends TestCase
 {
     public function testChangingPeriodForMonth(): void
     {
-        $builder = new HeatmapBuilder(now: Carbon::parse("2022-11-19 00:00:00"));
+        $builder = new HeatmapBuilder(
+            now: Carbon::parse("2022-11-19"),
+            timezone: new CarbonTimeZone("1"),
+        );
         $builder->forLastMonth();
 
         $result = $builder->build($this->getData());
@@ -23,7 +27,10 @@ class PeriodActionsTest extends TestCase
 
     public function testChangingPeriodForShorterMonth(): void
     {
-        $builder = new HeatmapBuilder(now: Carbon::parse("2022-03-01 00:00:00"));
+        $builder = new HeatmapBuilder(
+            now: Carbon::parse("2022-03-01 00:00:00"),
+            timezone: new CarbonTimeZone("1"),
+        );
         $builder->forLastMonth();
 
         $result = $builder->build($this->getData());
@@ -36,7 +43,10 @@ class PeriodActionsTest extends TestCase
 
     public function testChangingPeriodForYear(): void
     {
-        $builder = new HeatmapBuilder(now: Carbon::parse("2022-11-19 00:00:00"));
+        $builder = new HeatmapBuilder(
+            now: Carbon::parse("2022-11-19 00:00:00"),
+            timezone: new CarbonTimeZone("1"),
+        );
         $builder->forLastYear();
 
         $result = $builder->build($this->getData());
@@ -49,7 +59,10 @@ class PeriodActionsTest extends TestCase
 
     public function testChangingPeriodForLeapYear(): void
     {
-        $builder = new HeatmapBuilder(now: Carbon::parse("2020-05-01 00:00:00"));
+        $builder = new HeatmapBuilder(
+            now: Carbon::parse("2020-05-01 00:00:00"),
+            timezone: new CarbonTimeZone("1"),
+        );
         $builder->forLastYear();
 
         $result = $builder->build($this->getData());
@@ -62,7 +75,10 @@ class PeriodActionsTest extends TestCase
 
     public function testChangingPeriodForNumberOfTiles(): void
     {
-        $builder = new HeatmapBuilder(now: Carbon::parse("2022-03-01 00:00:00"));
+        $builder = new HeatmapBuilder(
+            now: Carbon::parse("2020-03-01 00:00:00"),
+            timezone: new CarbonTimeZone("1"),
+        );
         $builder->forNumberOfTiles(100);
 
         $result = $builder->build($this->getData());

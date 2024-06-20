@@ -5,13 +5,17 @@ declare(strict_types=1);
 use Blumilk\HeatmapBuilder\HeatmapBuilder;
 use Blumilk\HeatmapBuilder\Tile;
 use Carbon\Carbon;
+use Carbon\CarbonTimeZone;
 use PHPUnit\Framework\TestCase;
 
 class ArrayAccessItemsTest extends TestCase
 {
     public function testBasicArrayAccessItems(): void
     {
-        $builder = new HeatmapBuilder(now: Carbon::parse("2022-11-18"));
+        $builder = new HeatmapBuilder(
+            now: Carbon::parse("2022-11-18"),
+            timezone: new CarbonTimeZone("1"),
+        );
         $result = $builder->build($this->getData());
 
         $this->assertSame(
@@ -25,7 +29,9 @@ class ArrayAccessItemsTest extends TestCase
         $builder = new HeatmapBuilder(
             now: Carbon::parse("2022-11-18"),
             arrayAccessIndex: "updated_at",
+            timezone: new CarbonTimeZone("1"),
         );
+
         $result = $builder->build($this->getData());
 
         $this->assertSame(
@@ -36,7 +42,10 @@ class ArrayAccessItemsTest extends TestCase
 
     public function testArrayAccessItemsWithIndexChangedByMethod(): void
     {
-        $builder = new HeatmapBuilder(now: Carbon::parse("2022-11-18"));
+        $builder = new HeatmapBuilder(
+            now: Carbon::parse("2022-11-18"),
+            timezone: new CarbonTimeZone("1"),
+        );
         $builder->changeArrayAccessIndex("updated_at");
 
         $result = $builder->build($this->getData());
