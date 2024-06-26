@@ -6,6 +6,7 @@ use Blumilk\HeatmapBuilder\HeatmapBuilder;
 use Blumilk\HeatmapBuilder\Tile;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Carbon\CarbonTimeZone;
 use PHPUnit\Framework\TestCase;
 
 class PeriodChangedTest extends TestCase
@@ -14,7 +15,10 @@ class PeriodChangedTest extends TestCase
     {
         $start = Carbon::parse("2022-11-01");
         $end = Carbon::parse("2022-11-11");
-        $builder = new HeatmapBuilder(period: new CarbonPeriod($start, "1 day", $end));
+        $builder = new HeatmapBuilder(
+            period: new CarbonPeriod($start, "1 day", $end),
+            timezone: new CarbonTimeZone("1"),
+        );
 
         $result = $builder->build($this->getData());
 
@@ -29,7 +33,7 @@ class PeriodChangedTest extends TestCase
         $start = Carbon::parse("2022-11-01");
         $end = Carbon::parse("2022-11-11");
 
-        $builder = new HeatmapBuilder();
+        $builder = new HeatmapBuilder(timezone: new CarbonTimeZone("1"));
         $builder->changePeriod(new CarbonPeriod($start, "1 day", $end));
 
         $result = $builder->build($this->getData());

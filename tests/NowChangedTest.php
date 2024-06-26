@@ -5,13 +5,17 @@ declare(strict_types=1);
 use Blumilk\HeatmapBuilder\HeatmapBuilder;
 use Blumilk\HeatmapBuilder\Tile;
 use Carbon\Carbon;
+use Carbon\CarbonTimeZone;
 use PHPUnit\Framework\TestCase;
 
 class NowChangedTest extends TestCase
 {
     public function testChangingNow(): void
     {
-        $builder = new HeatmapBuilder(now: Carbon::parse("2022-11-19"));
+        $builder = new HeatmapBuilder(
+            now: Carbon::parse("2022-11-19"),
+            timezone: new CarbonTimeZone("1"),
+        );
         $result = $builder->build($this->getData());
 
         $this->assertSame(
@@ -23,7 +27,10 @@ class NowChangedTest extends TestCase
     public function testChangingNowByMethod(): void
     {
         $builder = new HeatmapBuilder();
-        $builder->changeNow(Carbon::parse("2022-11-20"));
+        $builder = new HeatmapBuilder(
+            now: Carbon::parse("2022-11-20"),
+            timezone: new CarbonTimeZone("1"),
+        );
 
         $result = $builder->build($this->getData());
 
