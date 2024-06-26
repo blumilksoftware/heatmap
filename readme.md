@@ -1,3 +1,5 @@
+![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/blumilksoftware/heatmap?style=for-the-badge) ![Packagist Version](https://img.shields.io/packagist/v/blumilksoftware/heatmap?style=for-the-badge) ![Packagist Downloads](https://img.shields.io/packagist/dt/blumilksoftware/heatmap?style=for-the-badge)
+
 ## About
 Making a heatmap from custom datasets should be extremely easy. We are here to help you with that.
 
