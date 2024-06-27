@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Blumilk\HeatmapBuilder;
+namespace Blumilk\Heatmap;
 
 use ArrayAccess;
-use Blumilk\HeatmapBuilder\Contracts\Decorator;
-use Blumilk\HeatmapBuilder\Contracts\TimeGroupable;
+use Blumilk\Heatmap\Contracts\Decorator;
+use Blumilk\Heatmap\Contracts\TimeGroupable;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Carbon\CarbonTimeZone;

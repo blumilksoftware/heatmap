@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Blumilk\HeatmapBuilder\Contracts;
+namespace Blumilk\Heatmap\Contracts;
 
 interface TimeGroupable
 {

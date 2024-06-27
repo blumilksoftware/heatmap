@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Blumilk\HeatmapBuilder\Decorators\TailwindDecorator;
-use Blumilk\HeatmapBuilder\HeatmapBuilder;
-use Blumilk\HeatmapBuilder\Tile;
+use Blumilk\Heatmap\Decorators\TailwindDecorator;
+use Blumilk\Heatmap\HeatmapBuilder;
+use Blumilk\Heatmap\Tile;
 use Carbon\Carbon;
 use PHPUnit\Framework\TestCase;
 

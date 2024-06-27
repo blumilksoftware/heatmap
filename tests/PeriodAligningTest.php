@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Blumilk\HeatmapBuilder\HeatmapBuilder;
+use Blumilk\Heatmap\HeatmapBuilder;
 use Carbon\Carbon;
 use PHPUnit\Framework\TestCase;
 

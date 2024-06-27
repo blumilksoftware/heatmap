@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Blumilk\HeatmapBuilder\HeatmapBuilder;
-use Blumilk\HeatmapBuilder\PeriodInterval;
-use Blumilk\HeatmapBuilder\Tile;
+use Blumilk\Heatmap\HeatmapBuilder;
+use Blumilk\Heatmap\PeriodInterval;
+use Blumilk\Heatmap\Tile;
 use Carbon\Carbon;
 use PHPUnit\Framework\TestCase;
 
