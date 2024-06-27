@@ -1,6 +1,6 @@
 {
-  "name": "blumilksoftware/heatmap-builder",
-  "description": "Heatmap builder library",
+  "name": "blumilksoftware/heatmap",
+  "description": "Heatmap library for PHP",
   "license": "MIT",
   "type": "library",
   "require": {
@@ -23,7 +23,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Blumilk\\HeatmapBuilder\\": "src/"
+      "Blumilk\\Heatmap\\": "src/"
     }
   },
   "scripts": {

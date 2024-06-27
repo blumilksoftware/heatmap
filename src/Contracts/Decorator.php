@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Blumilk\HeatmapBuilder\Contracts;
+namespace Blumilk\Heatmap\Contracts;
 
-use Blumilk\HeatmapBuilder\Tile;
+use Blumilk\Heatmap\Tile;
 
 interface Decorator
 {

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Blumilk\HeatmapBuilder\Decorators;
+namespace Blumilk\Heatmap\Decorators;
 
-use Blumilk\HeatmapBuilder\Contracts\Decorator;
-use Blumilk\HeatmapBuilder\Tile;
+use Blumilk\Heatmap\Contracts\Decorator;
+use Blumilk\Heatmap\Tile;
 
 class OpacityDecorator implements Decorator
 {

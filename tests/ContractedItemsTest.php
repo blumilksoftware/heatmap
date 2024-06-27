@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Blumilk\HeatmapBuilder\Contracts\TimeGroupable;
-use Blumilk\HeatmapBuilder\HeatmapBuilder;
-use Blumilk\HeatmapBuilder\Tile;
+use Blumilk\Heatmap\Contracts\TimeGroupable;
+use Blumilk\Heatmap\HeatmapBuilder;
+use Blumilk\Heatmap\Tile;
 use Carbon\Carbon;
 use Carbon\CarbonTimeZone;
 use PHPUnit\Framework\TestCase;

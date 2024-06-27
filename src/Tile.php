@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Blumilk\HeatmapBuilder;
+namespace Blumilk\Heatmap;
 
 use JsonSerializable;
 
