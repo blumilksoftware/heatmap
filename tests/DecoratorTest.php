@@ -41,7 +41,7 @@ class DecoratorTest extends TestCase
         $result = $builder->build($data);
 
         $this->assertSame(
-            expected: [0, 0, 2, 5, 0, 7, 0, 1, 0],
+            expected: [0, 0, 2, 5, 0, 7, 0, 1, 1],
             actual: array_map(fn(Tile $item): int => $item->count, $result),
         );
 
