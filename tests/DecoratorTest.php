@@ -62,7 +62,7 @@ class DecoratorTest extends TestCase
 
         for ($i = 0; $i < 5; $i++) {
             $data[] = [
-                "created_at" => $now->copy()->addDays($i)->format('Y-m-d H:i:s')
+                "created_at" => $now->copy()->addDays($i)->format("Y-m-d H:i:s"),
             ];
         }
 
