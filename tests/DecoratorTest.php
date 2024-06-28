@@ -6,6 +6,7 @@ use Blumilk\Heatmap\Decorators\TailwindDecorator;
 use Blumilk\Heatmap\HeatmapBuilder;
 use Blumilk\Heatmap\Tile;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Carbon\CarbonTimeZone;
 use PHPUnit\Framework\TestCase;
 
@@ -68,6 +69,7 @@ class DecoratorTest extends TestCase
 
         $builder = new HeatmapBuilder(
             now: $now,
+            period: CarbonPeriod::create(Carbon::create($now->year, $now->month, $now->day), Carbon::create($now->year, $now->month, $now->day)->addDay(4)),
             decorator: new TailwindDecorator("green"),
             timezone: new CarbonTimeZone("1"),
         );
