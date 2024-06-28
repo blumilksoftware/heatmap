@@ -6,6 +6,7 @@ use Blumilk\Heatmap\Decorators\TailwindDecorator;
 use Blumilk\Heatmap\HeatmapBuilder;
 use Blumilk\Heatmap\Tile;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Carbon\CarbonTimeZone;
 use PHPUnit\Framework\TestCase;
 
@@ -52,6 +53,37 @@ class DecoratorTest extends TestCase
                 ["bg-white", "bg-white", "bg-green-100", "bg-green-600", "bg-white", "bg-green-900", "bg-white", "bg-green-50"],
             ),
             actual: array_map(fn(Tile $item): string => $item->description, $result),
+        );
+    }
+
+    public function testTodayAndFuture(): void
+    {
+        $data = [];
+        $now = Carbon::now();
+
+        for ($i = 0; $i < 5; $i++) {
+            $data[] = [
+                "created_at" => $now->copy()->addDays($i)->format("Y-m-d H:i:s"),
+            ];
+        }
+
+        $builder = new HeatmapBuilder(
+            now: $now,
+            period: CarbonPeriod::create(Carbon::create($now->year, $now->month, $now->day), Carbon::create($now->year, $now->month, $now->day)->addDay(4)),
+            decorator: new TailwindDecorator("green"),
+            timezone: new CarbonTimeZone("1"),
+        );
+
+        $result = $builder->build($data);
+
+        $this->assertSame(
+            expected: [1, 0, 0, 0, 0],
+            actual: array_map(fn(Tile $item): int => $item->isToday ? 1 : 0, $result),
+        );
+
+        $this->assertSame(
+            expected: [0, 1, 1, 1, 1],
+            actual: array_map(fn(Tile $item): int => $item->inFuture ? 1 : 0, $result),
         );
     }
 }
