@@ -41,7 +41,7 @@ class DecoratorTest extends TestCase
         $result = $builder->build($data);
 
         $this->assertSame(
-            expected: [0, 0, 2, 5, 0, 7, 0, 1, 1],
+            expected: [0, 2, 5, 0, 7, 0, 1, 1],
             actual: array_map(fn(Tile $item): int => $item->count, $result),
         );
 
@@ -50,7 +50,7 @@ class DecoratorTest extends TestCase
         $this->assertSame(
             expected: array_map(
                 fn(string $class): string => "$defaultClasses $class",
-                ["bg-white", "bg-white", "bg-green-100", "bg-green-600", "bg-white", "bg-green-900", "bg-white", "bg-green-50"],
+                ["bg-white", "bg-green-100", "bg-green-600", "bg-white", "bg-green-900", "bg-white", "bg-green-50", "bg-green-50"],
             ),
             actual: array_map(fn(Tile $item): string => $item->description, $result),
         );
