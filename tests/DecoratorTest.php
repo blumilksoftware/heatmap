@@ -84,12 +84,12 @@ class DecoratorTest extends TestCase
         $result = $builder->build($data);
 
         $this->assertSame(
-            expected: [0, 0, 0, 0, 0, 0, 1, 0],
+            expected: [0, 0, 0, 0, 0, 1, 0, 0],
             actual: array_map(fn(Tile $item): int => $item->isToday ? 1 : 0, $result),
         );
 
         $this->assertSame(
-            expected: [0, 0, 0, 0, 0, 0, 0, 1],
+            expected: [0, 0, 0, 0, 0, 0, 1, 1],
             actual: array_map(fn(Tile $item): int => $item->inFuture ? 1 : 0, $result),
         );
     }
