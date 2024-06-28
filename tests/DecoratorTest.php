@@ -57,26 +57,17 @@ class DecoratorTest extends TestCase
 
     public function testTodayAndFuture(): void
     {
-        $data = [
-            ["created_at" => "2022-11-13 00:00:00"],
-            ["created_at" => "2022-11-13 00:00:00"],
-            ["created_at" => "2022-11-14 00:00:00"],
-            ["created_at" => "2022-11-14 00:00:00"],
-            ["created_at" => "2022-11-14 00:00:00"],
-            ["created_at" => "2022-11-14 00:00:00"],
-            ["created_at" => "2022-11-14 00:00:00"],
-            ["created_at" => "2022-11-16 00:00:00"],
-            ["created_at" => "2022-11-16 00:00:00"],
-            ["created_at" => "2022-11-16 00:00:00"],
-            ["created_at" => "2022-11-16 00:00:00"],
-            ["created_at" => "2022-11-16 00:00:00"],
-            ["created_at" => "2022-11-16 00:00:00"],
-            ["created_at" => "2022-11-16 00:00:00"],
-            ["created_at" => "2022-11-18 00:00:00"],
-        ];
+        $data = [];
+        $now = Carbon::now();
+
+        for ($i = 0; $i < 5; $i++) {
+            $data[] = [
+                "created_at" => $now->copy()->addDays($i)->format('Y-m-d H:i:s')
+            ];
+        }
 
         $builder = new HeatmapBuilder(
-            now: Carbon::parse("2022-11-16"),
+            now: $now,
             decorator: new TailwindDecorator("green"),
             timezone: new CarbonTimeZone("1"),
         );
@@ -84,12 +75,12 @@ class DecoratorTest extends TestCase
         $result = $builder->build($data);
 
         $this->assertSame(
-            expected: [0, 0, 0, 0, 0, 1, 0, 0],
+            expected: [1, 0, 0, 0, 0],
             actual: array_map(fn(Tile $item): int => $item->isToday ? 1 : 0, $result),
         );
 
         $this->assertSame(
-            expected: [0, 0, 0, 0, 0, 0, 1, 1],
+            expected: [0, 1, 1, 1, 1],
             actual: array_map(fn(Tile $item): int => $item->inFuture ? 1 : 0, $result),
         );
     }
