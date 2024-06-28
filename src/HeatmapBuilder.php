@@ -62,7 +62,12 @@ class HeatmapBuilder
                     PeriodInterval::Daily => $date->isCurrentDay(),
                     PeriodInterval::Hourly => $date->isCurrentHour(),
                 },
-                inFuture: $date->isFuture(),
+                inFuture: match ($this->periodInterval) {
+                    PeriodInterval::Monthly => !$date->isCurrentMonth() && $date->greaterThan($this->now),
+                    PeriodInterval::Weekly => !$date->isCurrentWeek() && $date->greaterThan($this->now),
+                    PeriodInterval::Daily => !$date->isCurrentDay() && $date->greaterThan($this->now),
+                    PeriodInterval::Hourly => !$date->isCurrentHour() && $date->greaterThan($this->now),
+                },
             );
         }
 
