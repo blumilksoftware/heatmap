@@ -29,7 +29,7 @@ class DecoratorTest extends TestCase
             ["created_at" => "2022-11-16 00:00:00"],
             ["created_at" => "2022-11-16 00:00:00"],
             ["created_at" => "2022-11-18 00:00:00"],
-            ["created_at" => "2022-11-19 00:00:00"]
+            ["created_at" => "2022-11-19 00:00:00"],
         ];
 
         $builder = new HeatmapBuilder(
