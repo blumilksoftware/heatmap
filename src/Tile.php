@@ -21,7 +21,7 @@ class Tile implements JsonSerializable
         return [
             "label" => $this->label,
             "count" => $this->count,
-            "description" => $this->description ?: null,
+            "description" => $this->description,
         ];
     }
 }

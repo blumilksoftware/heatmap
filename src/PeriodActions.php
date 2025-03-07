@@ -8,25 +8,13 @@ use Carbon\CarbonPeriod;
 
 trait PeriodActions
 {
-    private const UNIT_HOURS = 'hours';
-    private const UNIT_DAYS = 'days';
-    private const UNIT_WEEKS = 'weeks';
-    private const UNIT_MONTH = 'month';
-    private const UNIT_YEAR = 'year';
-    private const UNIT_DECADE = 'decade';
+    private const UNIT_HOURS = "hours";
+    private const UNIT_DAYS = "days";
+    private const UNIT_WEEKS = "weeks";
+    private const UNIT_MONTH = "month";
+    private const UNIT_YEAR = "year";
+    private const UNIT_DECADE = "decade";
     private const DEFAULT_TIME_UNIT_DURATION = 1;
-
-    /**
-     * Generic method to set a period based on the starting point and the duration type.
-     */
-    private function setPeriodFromDuration($duration, string $unit): static
-    {
-        $start = $this->now->copy()->sub($duration, $unit);
-        $end = $this->now->copy();
-        $this->period = new CarbonPeriod($start, $this->periodInterval->value, $end);
-
-        return $this;
-    }
 
     public function forLastMonth(): static
     {
@@ -53,5 +41,14 @@ trait PeriodActions
         };
 
         return $this->setPeriodFromDuration($number, $unit);
+    }
+
+    protected function setPeriodFromDuration(int $duration, string $unit): static
+    {
+        $start = $this->now->copy()->sub($duration, $unit);
+        $end = $this->now->copy();
+        $this->period = new CarbonPeriod($start, $this->periodInterval->value, $end);
+
+        return $this;
     }
 }
