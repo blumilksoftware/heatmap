@@ -10,6 +10,7 @@ on:
       - reopened
       - ready_for_review
     paths:
+      - '.github/workflows/php.yml'
       - '**.php'
       - 'composer.json'
       - 'composer.lock'
@@ -29,7 +30,7 @@ jobs:
         run: composer validate
 
       - name: Cache dependencies
-        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4.2.2 # https://github.com/actions/cache
         with:
           path: vendor
           key: ${{ runner.os }}-composer-dependencies-${{ hashFiles('composer.lock') }}
